@@ -6,12 +6,42 @@ For guidance on setting up and submitting this assignment, refer to the Marcy la
 
 Imagine you are teaching a friend about OOP. They mainly want to understand what is Encapsulation. Write a brief lesson on Encapsulation that includes the following:
 
-* What is encapsulation?
-* What major goal does this help to achieve in software engineering?
-* Give an example (in code) of encapsulation.
-* An explanation of how the code example demonstrates encapsulation
+- What is encapsulation?
+- What major goal does this help to achieve in software engineering?
+- Give an example (in code) of encapsulation.
+- An explanation of how the code example demonstrates encapsulation
 
 ### Response 1
+
+What is encapsulation?
+Encapsulation is the process of grouping data and methods together into an object.
+
+What Major goal does this help to achieve in software engineering?
+This helps with the predictability and consistency of code by limiting direct access to data and controlling its modifications through methods.
+
+Example:
+
+```js
+const createCounter = () => {
+  let count = 0;
+
+  return {
+    getcount() {
+      console.log(count)
+    }
+    increment() {
+      count++;
+    },
+
+    decrement() {
+      count--;
+    },
+  };
+};
+```
+
+An explanation of how the code example demonstrates encapsulation
+The code above demonstrates encapsulation because it keeps the count variable private within the function's scope. The variable can only be accessed or modified through the provided methods (getCount, increment, and decrement), this ensures limited interaction with the data.
 
 ## Prompt 2
 
@@ -19,17 +49,16 @@ The following `friendsManager` object is an example of an interface that is **NO
 
 ```js
 const friendsManager = {
- friends: [],
- addFriend(newFriend) {
-   if (typeof newFriend !== 'string') return;
-   this.friends.push(newFriend);
- }
-}
+  friends: [],
+  addFriend(newFriend) {
+    if (typeof newFriend !== "string") return;
+    this.friends.push(newFriend);
+  },
+};
 
-
-friendsManager.addFriend('daniel');
+friendsManager.addFriend("daniel");
 friendsManager.addFriend(true);
-friendsManager.friends.push('emmaneul');
+friendsManager.friends.push("emmaneul");
 friendsManager.friends.push(42);
 ```
 
@@ -37,9 +66,31 @@ Explain how the code is not consistent or predictable, then provide an example i
 
 ### Response 2
 
+Why this code is not ideal:
+The code is not consistent because it is allowing the friends array to be accessed and modified outside the object which also affects predictability since we might not expect a name to be there that we haven't added through our methods. Also, even though we have code that is set to validate that only a string is added, we can override this by directly accessing the friends array.
+
+Ways we can fix this:
+A way we can fix this is by using a function. With a function, there's no way to access/interact with the friends array without using the provided methods.
+
+```js
+const friendsManager = () => {
+  let friends = [],
+  return {
+  addFriend(newFriend) {
+    if (typeof newFriend !== "string") return;
+    this.friends.push(newFriend);
+   }
+   getFriends() {
+    return [...friends]
+   }
+  },
+};
+
+```
+
 ## Prompt 3
 
-With OOP in JavaScript, it's possible to use factory functions to achieve encapsulation and re-use them to make objects that look alike. However, factory functions have drawbacks and we often use classes instead. 
+With OOP in JavaScript, it's possible to use factory functions to achieve encapsulation and re-use them to make objects that look alike. However, factory functions have drawbacks and we often use classes instead.
 
 How would you explain to a budding developer what the drawbacks of using factory functions are and why it is better to use classes instead?
 
@@ -49,9 +100,8 @@ How would you explain to a budding developer what the drawbacks of using factory
 
 Do some research on the history of when / how classes were introduced into JavaScript and share your findings. Your response should include:
 
-* What version of JavaScript were classes introduced in and when did it come out?
-* Why were classes introduced into JavaScript?
-
+- What version of JavaScript were classes introduced in and when did it come out?
+- Why were classes introduced into JavaScript?
 
 ### Response 4
 
@@ -61,17 +111,15 @@ OOP can still be achieved in JavaScript without using the `class` keyword and in
 
 ```js
 function Person(name, age) {
- this.name = name;
- this.age = age;
+  this.name = name;
+  this.age = age;
 }
 
-
 Person.prototype.greet = function () {
- return `Hi, I'm ${this.name}, and I'm ${this.age} years old.`;
+  return `Hi, I'm ${this.name}, and I'm ${this.age} years old.`;
 };
 
-
-const alice = new Person('Alice', 30);
+const alice = new Person("Alice", 30);
 console.log(alice.greet());
 ```
 
